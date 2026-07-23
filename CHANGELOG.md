@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 ## [1.0.14]
 
 ### Changed
-- Added Codex as a supported CLI target via `--ai codex`; installs skills into `$CODEX_HOME/skills/<skill-name>` or `~/.codex/skills/<skill-name>` by default.
+- Added Codex as a supported CLI target via `--ai codex`; installs skills globally into `$CODEX_HOME/skills/<skill-name>` or `~/.codex/skills/<skill-name>` by default, with `--project` for project-local `.codex/skills/<skill-name>` installs.
 - Updated Odoo 16/17/18/19 skill instructions to prefer the standalone Odoo reference pack and avoid Superpowers workflows by default when Odoo context is active.
 
 ### Added
-- CLI validation coverage for Codex installs to ensure `--ai codex` copies the selected skill into the expected Codex skills directory.
+- CLI validation coverage for default global Codex installs and project-local `--project` installs.
 
 ## [1.0.13]
 

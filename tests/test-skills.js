@@ -134,7 +134,7 @@ function validateChangelog() {
 function validateCodexCliInstall() {
   const cliPath = path.join(ROOT, "bin", "agent-skills.js");
   const codexHome = fs.mkdtempSync(path.join(os.tmpdir(), "agent-skills-codex-"));
-  const result = spawnSync(
+  const globalResult = spawnSync(
     process.execPath,
     [cliPath, "init", "--ai", "codex", "--skill", "skills", "--version", "odoo-18.0"],
     {
@@ -144,14 +144,48 @@ function validateCodexCliInstall() {
     }
   );
 
-  if (result.status !== 0) {
+  if (globalResult.status !== 0) {
     fail(
-      `codex cli install failed: ${(result.stderr || result.stdout).trim()}`
+      `codex global cli install failed: ${(globalResult.stderr || globalResult.stdout).trim()}`
     );
     return;
   }
 
-  const installedSkillPath = path.join(codexHome, "skills", "odoo-18", "SKILL.md");
+  const globalSkillPath = path.join(codexHome, "skills", "odoo-18", "SKILL.md");
+  if (!fs.existsSync(globalSkillPath)) {
+    fail(`codex global cli install missing ${globalSkillPath}`);
+    return;
+  }
+
+  const projectRoot = fs.mkdtempSync(path.join(os.tmpdir(), "agent-skills-project-"));
+  const projectResult = spawnSync(
+    process.execPath,
+    [
+      cliPath,
+      "init",
+      "--ai",
+      "codex",
+      "--project",
+      "--skill",
+      "skills",
+      "--version",
+      "odoo-18.0",
+    ],
+    {
+      cwd: projectRoot,
+      env: { ...process.env },
+      encoding: "utf8",
+    }
+  );
+
+  if (projectResult.status !== 0) {
+    fail(
+      `codex project cli install failed: ${(projectResult.stderr || projectResult.stdout).trim()}`
+    );
+    return;
+  }
+
+  const installedSkillPath = path.join(projectRoot, ".codex", "skills", "odoo-18", "SKILL.md");
   if (!fs.existsSync(installedSkillPath)) {
     fail(`codex cli install missing ${installedSkillPath}`);
     return;
@@ -163,7 +197,7 @@ function validateCodexCliInstall() {
     return;
   }
 
-  ok("codex cli installs skills into CODEX_HOME/skills/<skill-name>");
+  ok("codex cli installs globally by default and locally with --project");
 }
 
 function main() {

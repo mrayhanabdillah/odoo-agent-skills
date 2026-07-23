@@ -36,6 +36,7 @@ Options:
   --skill <skill>         Skill folder name (default: ${DEFAULT_SKILL})
   --version <version>     Version (default: ${DEFAULT_VERSION})
   --dest <path>           Destination directory (default: current directory)
+  --project               Install Codex skills into this project's .codex/skills
   --force                 Overwrite existing files
   --dry-run               Show what would be copied
   --offline               Skip GitHub download, use bundled assets
@@ -231,6 +232,7 @@ function parseArgs(argv) {
     version: DEFAULT_VERSION,
     dest: process.cwd(),
     destExplicit: false,
+    project: false,
     force: false,
     dryRun: false,
     offline: false,
@@ -295,6 +297,10 @@ function parseArgs(argv) {
       args.dest = tokens[i + 1] || args.dest;
       args.destExplicit = true;
       i += 1;
+      continue;
+    }
+    if (token === "--project") {
+      args.project = true;
       continue;
     }
     if (token === "--force") {
@@ -397,9 +403,11 @@ function resolveCodexHome(args) {
 }
 
 function installCodex(versionDir, args) {
-  const codexHome = resolveCodexHome(args);
   const skillName = getSkillName(versionDir);
-  const targetDir = path.join(codexHome, "skills", skillName);
+  const targetRoot = args.project
+    ? path.join(args.dest, ".codex")
+    : resolveCodexHome(args);
+  const targetDir = path.join(targetRoot, "skills", skillName);
   copyDir(versionDir, targetDir, args, null);
   return targetDir;
 }

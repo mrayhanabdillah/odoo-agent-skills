@@ -83,8 +83,11 @@ npx @dubwerkz/agent-skills-cli versions skills
 # Install Odoo 18 guides for Cursor
 npx @dubwerkz/agent-skills-cli init --ai cursor --skill skills --version odoo-18.0
 
-# Install Odoo 18 guides for Codex
+# Install Odoo 18 guides for Codex globally
 npx @dubwerkz/agent-skills-cli init --ai codex --skill skills --version odoo-18.0
+
+# Install Odoo 18 guides for the current Codex project only
+npx @dubwerkz/agent-skills-cli init --ai codex --project --skill skills --version odoo-18.0
 
 # Install for all supported assistants
 npx @dubwerkz/agent-skills-cli init --ai all --skill skills --version odoo-19.0
@@ -92,7 +95,7 @@ npx @dubwerkz/agent-skills-cli init --ai all --skill skills --version odoo-19.0
 
 Supported `--ai` targets: `cursor`, `claude`, `codex`, `antigravity`, `kiro`, `docs`, `all`.
 
-Codex installs into `$CODEX_HOME/skills/<skill-name>` when `CODEX_HOME` is set, otherwise `~/.codex/skills/<skill-name>`. Use `--dest <path>` to override the Codex home directory.
+Codex installs globally into `$CODEX_HOME/skills/<skill-name>` when `CODEX_HOME` is set, otherwise `~/.codex/skills/<skill-name>`. Add `--project` to install into the current project's `.codex/skills/<skill-name>` instead.
 
 Other installable packs: `code-review`, `dtg-base`, `flow-diagram`, `odoo-commit`, `slide`.
 
