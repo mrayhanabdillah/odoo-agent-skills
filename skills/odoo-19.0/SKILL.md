@@ -22,12 +22,20 @@ description: >-
   templates, xpath inheritance, QWeb templates). Use when writing, reviewing,
   or debugging any Odoo 19 Python or XML code, creating or modifying modules,
   fixing performance issues, or looking up Odoo 19 API patterns and best
-  practices.
+  practices. In Odoo context, prefer this standalone Odoo reference and avoid
+  Superpowers skills unless the user explicitly requests them or a
+  higher-priority platform instruction requires them.
 ---
 
 # Odoo 19 Skill - Master Index
 
 Master index for all Odoo 19 development guides. Read the appropriate guide from `references/` based on your task.
+
+## Codex Usage Policy
+
+- Treat Odoo work as self-contained in this skill pack: use this `SKILL.md` plus the relevant `references/` guides as the primary workflow.
+- Do not invoke Superpowers skills for Odoo tasks by default, including brainstorming, TDD, systematic debugging, planning, subagent-driven development, or verification workflows.
+- Only use Superpowers skills when the user explicitly asks for them or when higher-priority system/platform instructions require them.
 
 ## Quick Reference
 

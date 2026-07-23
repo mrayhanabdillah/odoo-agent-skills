@@ -2,6 +2,7 @@
 "use strict";
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const https = require("https");
 
@@ -11,10 +12,10 @@ const DEFAULT_SKILL = "odoo";
 const DEFAULT_VERSION = "18.0";
 const EXCLUDED_DIRS = new Set(["bin", "node_modules"]);
 const GITHUB_REPO = "unclecatvn/agent-skills";
-const NPM_PACKAGE = "@unclecat/agent-skills-cli";
+const NPM_PACKAGE = "@dubwerkz/agent-skills-cli";
 
 // Config file path for storing last update check
-const CONFIG_DIR = path.join(require("os").homedir(), ".agent-skills");
+const CONFIG_DIR = path.join(os.homedir(), ".agent-skills");
 const UPDATE_CHECK_FILE = path.join(CONFIG_DIR, "update-check.json");
 const UPDATE_CHECK_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -31,7 +32,7 @@ Usage:
   agent-skills help
 
 Options:
-  --ai <assistant>        cursor | claude | antigravity | kiro | docs | all
+  --ai <assistant>        cursor | claude | codex | antigravity | kiro | docs | all
   --skill <skill>         Skill folder name (default: ${DEFAULT_SKILL})
   --version <version>     Version (default: ${DEFAULT_VERSION})
   --dest <path>           Destination directory (default: current directory)
@@ -229,6 +230,7 @@ function parseArgs(argv) {
     skill: null,
     version: DEFAULT_VERSION,
     dest: process.cwd(),
+    destExplicit: false,
     force: false,
     dryRun: false,
     offline: false,
@@ -291,6 +293,7 @@ function parseArgs(argv) {
     }
     if (token === "--dest") {
       args.dest = tokens[i + 1] || args.dest;
+      args.destExplicit = true;
       i += 1;
       continue;
     }
@@ -376,6 +379,31 @@ function installClaude(skill, versionDir, destRoot, options) {
   return targetDir;
 }
 
+function getSkillName(versionDir) {
+  const skillPath = path.join(versionDir, "SKILL.md");
+  try {
+    const text = fs.readFileSync(skillPath, "utf8");
+    const match = /^name:\s*([^\n]+)$/m.exec(text);
+    if (match) return match[1].trim().replace(/^['"]|['"]$/g, "");
+  } catch {
+    // Fall through to folder-name fallback.
+  }
+  return path.basename(versionDir).replace(/\.0$/, "");
+}
+
+function resolveCodexHome(args) {
+  if (args.destExplicit) return args.dest;
+  return process.env.CODEX_HOME || path.join(os.homedir(), ".codex");
+}
+
+function installCodex(versionDir, args) {
+  const codexHome = resolveCodexHome(args);
+  const skillName = getSkillName(versionDir);
+  const targetDir = path.join(codexHome, "skills", skillName);
+  copyDir(versionDir, targetDir, args, null);
+  return targetDir;
+}
+
 function runInit(args) {
   const ai = normalize(args.ai || DEFAULT_AI).toLowerCase();
   const positional = args.positionals;
@@ -386,6 +414,7 @@ function runInit(args) {
   const valid = new Set([
     "cursor",
     "claude",
+    "codex",
     "antigravity",
     "kiro",
     "docs",
@@ -421,6 +450,10 @@ function runInit(args) {
   if (ai === "claude" || ai === "all") {
     const target = installClaude(skill, versionDir, args.dest, installArgs);
     results.push(`claude -> ${target}`);
+  }
+  if (ai === "codex" || ai === "all") {
+    const target = installCodex(versionDir, installArgs);
+    results.push(`codex -> ${target}`);
   }
 
   if (args.dryRun) {

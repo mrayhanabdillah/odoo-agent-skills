@@ -7,12 +7,20 @@ description: >
   Use this skill whenever work involves Odoo 17 or custom addons—even if the user only pastes a traceback,
   mentions addons/ or __manifest__.py, describes form/tree/kanban/XML errors, HTTP controllers, or
   business rules on models—including building features, fixing bugs, refactoring, or reviewing addon code.
+  In Odoo context, prefer this standalone Odoo reference and avoid Superpowers skills unless the user
+  explicitly requests them or a higher-priority platform instruction requires them.
 globs: "**/*.{py,xml,csv,js,ts}"
 ---
 
 # Odoo 17 Skill - Master Index
 
 Master index for all Odoo 17 development guides. Read the appropriate guide from `references/` based on your task.
+
+## Codex Usage Policy
+
+- Treat Odoo work as self-contained in this skill pack: use this `SKILL.md` plus the relevant `references/` guides as the primary workflow.
+- Do not invoke Superpowers skills for Odoo tasks by default, including brainstorming, TDD, systematic debugging, planning, subagent-driven development, or verification workflows.
+- Only use Superpowers skills when the user explicitly asks for them or when higher-priority system/platform instructions require them.
 
 ## Quick Reference
 

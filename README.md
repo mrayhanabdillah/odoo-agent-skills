@@ -6,8 +6,8 @@
 
 **Curated AI skill packs for Odoo development, code review, and professional workflows — 57k+ lines of version-pinned framework expertise.**
 
-[![npm version](https://img.shields.io/npm/v/@unclecat/agent-skills-cli.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@unclecat/agent-skills-cli)
-[![npm downloads](https://img.shields.io/npm/dm/@unclecat/agent-skills-cli.svg?style=flat-square&color=blue)](https://www.npmjs.com/package/@unclecat/agent-skills-cli)
+[![npm version](https://img.shields.io/npm/v/@dubwerkz/agent-skills-cli.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@dubwerkz/agent-skills-cli)
+[![npm downloads](https://img.shields.io/npm/dm/@dubwerkz/agent-skills-cli.svg?style=flat-square&color=blue)](https://www.npmjs.com/package/@dubwerkz/agent-skills-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/unclecatvn/agent-skills?style=flat-square&color=yellow)](https://github.com/unclecatvn/agent-skills/stargazers)
 [![GitHub last commit](https://img.shields.io/github/last-commit/unclecatvn/agent-skills?style=flat-square)](https://github.com/unclecatvn/agent-skills/commits/main)
@@ -78,16 +78,21 @@ Install a specific pack into your project with the bundled CLI:
 
 ```bash
 # List available Odoo versions
-npx @unclecat/agent-skills-cli versions skills
+npx @dubwerkz/agent-skills-cli versions skills
 
 # Install Odoo 18 guides for Cursor
-npx @unclecat/agent-skills-cli init --ai cursor --skill skills --version odoo-18.0
+npx @dubwerkz/agent-skills-cli init --ai cursor --skill skills --version odoo-18.0
+
+# Install Odoo 18 guides for Codex
+npx @dubwerkz/agent-skills-cli init --ai codex --skill skills --version odoo-18.0
 
 # Install for all supported assistants
-npx @unclecat/agent-skills-cli init --ai all --skill skills --version odoo-19.0
+npx @dubwerkz/agent-skills-cli init --ai all --skill skills --version odoo-19.0
 ```
 
-Supported `--ai` targets: `cursor`, `claude`, `antigravity`, `kiro`, `docs`, `all`.
+Supported `--ai` targets: `cursor`, `claude`, `codex`, `antigravity`, `kiro`, `docs`, `all`.
+
+Codex installs into `$CODEX_HOME/skills/<skill-name>` when `CODEX_HOME` is set, otherwise `~/.codex/skills/<skill-name>`. Use `--dest <path>` to override the Codex home directory.
 
 Other installable packs: `code-review`, `dtg-base`, `flow-diagram`, `odoo-commit`, `slide`.
 
@@ -255,6 +260,7 @@ Agent Skills works with popular AI-powered IDEs:
 |------------|----------------|
 | **Cursor** | `npx skills add unclecatvn/agent-skills` or CLI `--ai cursor` |
 | **Claude Code** | Plugin marketplace or CLI `--ai claude` |
+| **Codex** | CLI `--ai codex` |
 | **Antigravity** | CLI `--ai antigravity` |
 | **Kiro** | CLI `--ai kiro` |
 | **Plain docs folder** | CLI `--ai docs` |
@@ -329,7 +335,7 @@ CI also runs [SkillSpector](https://github.com/NVIDIA/skillspector) on `./skills
 - [Issues](https://github.com/unclecatvn/agent-skills/issues)
 - [Discussions](https://github.com/unclecatvn/agent-skills/discussions)
 - [Releases](https://github.com/unclecatvn/agent-skills/releases)
-- [npm Package](https://www.npmjs.com/package/@unclecat/agent-skills-cli)
+- [npm Package](https://www.npmjs.com/package/@dubwerkz/agent-skills-cli)
 
 ---
 

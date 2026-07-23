@@ -12,7 +12,9 @@
  * Exit code 0 on success, 1 on any failure.
  */
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const RED = "\x1b[31m";
@@ -129,6 +131,41 @@ function validateChangelog() {
   }
 }
 
+function validateCodexCliInstall() {
+  const cliPath = path.join(ROOT, "bin", "agent-skills.js");
+  const codexHome = fs.mkdtempSync(path.join(os.tmpdir(), "agent-skills-codex-"));
+  const result = spawnSync(
+    process.execPath,
+    [cliPath, "init", "--ai", "codex", "--skill", "skills", "--version", "odoo-18.0"],
+    {
+      cwd: ROOT,
+      env: { ...process.env, CODEX_HOME: codexHome },
+      encoding: "utf8",
+    }
+  );
+
+  if (result.status !== 0) {
+    fail(
+      `codex cli install failed: ${(result.stderr || result.stdout).trim()}`
+    );
+    return;
+  }
+
+  const installedSkillPath = path.join(codexHome, "skills", "odoo-18", "SKILL.md");
+  if (!fs.existsSync(installedSkillPath)) {
+    fail(`codex cli install missing ${installedSkillPath}`);
+    return;
+  }
+
+  const installed = fs.readFileSync(installedSkillPath, "utf8");
+  if (!installed.includes("name: odoo-18")) {
+    fail("codex cli install copied the wrong skill content");
+    return;
+  }
+
+  ok("codex cli installs skills into CODEX_HOME/skills/<skill-name>");
+}
+
 function main() {
   console.log("Validating skills/");
   validateSkillDir(path.join(ROOT, "skills"), "skills");
@@ -141,6 +178,9 @@ function main() {
 
   console.log("\nValidating CHANGELOG");
   validateChangelog();
+
+  console.log("\nValidating Codex CLI install");
+  validateCodexCliInstall();
 
   console.log("");
   if (errors.length > 0) {
