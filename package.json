@@ -21,5 +21,8 @@
   "author": "UncleCat",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@dubwerkz/agent-skills-cli": "^1.0.15"
   }
 }
