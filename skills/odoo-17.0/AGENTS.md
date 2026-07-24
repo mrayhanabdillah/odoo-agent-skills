@@ -8,7 +8,7 @@ Setup guide for using Odoo 17 documentation with AI coding assistants (Cursor, C
 
 ```bash
 # Add Odoo 17 skill to your project
-npx skills add unclecatvn/agent-skills
+npx skills add dubwerkz/odoo-agent-skills
 ```
 
 Visit [https://skills.sh/](https://skills.sh/) for more installation options.
@@ -18,7 +18,7 @@ Visit [https://skills.sh/](https://skills.sh/) for more installation options.
 Configure once in Cursor settings:
 - `Settings` → `Rules` → `Add Remote Rule`
 - Source: `Git Repository`
-- URL: `git@github.com:unclecatvn/agent-skills.git`
+- URL: `git@github.com:dubwerkz/odoo-agent-skills.git`
 - Branch: `17.0`
 - Subfolder: `skills/odoo-17.0/`
 
@@ -87,7 +87,7 @@ skills/odoo-17.0/
 | Setting | Value |
 |---------|-------|
 | Source | Git Repository |
-| URL | `git@github.com:unclecatvn/agent-skills.git` |
+| URL | `git@github.com:dubwerkz/odoo-agent-skills.git` |
 | Branch | `17.0` |
 | Subfolder | `skills/odoo-17.0/` |
 
@@ -119,7 +119,7 @@ skills/odoo-17.0/
 
 ```bash
 # Install via skills.sh
-npx skills add unclecatvn/agent-skills
+npx skills add dubwerkz/odoo-agent-skills
 ```
 
 Claude Code reads:
@@ -140,7 +140,7 @@ Claude Code reads:
 
 ## Cursor / Claude Skills Folder
 
-After installing via `npx skills add unclecatvn/agent-skills`, the skill is placed at:
+After installing via `npx skills add dubwerkz/odoo-agent-skills`, the skill is placed at:
 
 ```
 .cursor/skills/
@@ -171,6 +171,6 @@ Odoo 17 is the last version before the v18 API modernization. Write code using t
 
 ## Repository
 
-**URL**: `git@github.com:unclecatvn/agent-skills.git`
+**URL**: `git@github.com:dubwerkz/odoo-agent-skills.git`
 **Branch**: `17.0`
 **License**: MIT

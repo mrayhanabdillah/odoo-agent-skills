@@ -1,369 +1,260 @@
-<div align="center">
+# Odoo Agent Skills
 
-# Agent Skills
+![Odoo Agent Skills Hero](lib/image/header-new.png)
 
-![Agent Skills Hero](lib/image/header-new.png)
+[![npm version](https://img.shields.io/npm/v/@dubwerkz/odoo-agent-skills.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@dubwerkz/odoo-agent-skills)
+[![npm downloads](https://img.shields.io/npm/dm/@dubwerkz/odoo-agent-skills.svg?style=flat-square&color=blue)](https://www.npmjs.com/package/@dubwerkz/odoo-agent-skills)
+[![GitHub stars](https://img.shields.io/github/stars/dubwerkz/odoo-agent-skills?style=flat-square&color=yellow)](https://github.com/dubwerkz/odoo-agent-skills/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/dubwerkz/odoo-agent-skills?style=flat-square)](https://github.com/dubwerkz/odoo-agent-skills/commits/main)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/dubwerkz/odoo-agent-skills/pulls)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-**Curated AI skill packs for Odoo development, code review, and professional workflows — 57k+ lines of version-pinned framework expertise.**
+Version-aware Odoo skill packs for Codex and other AI coding assistants.
 
-[![npm version](https://img.shields.io/npm/v/@dubwerkz/agent-skills-cli.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@dubwerkz/agent-skills-cli)
-[![npm downloads](https://img.shields.io/npm/dm/@dubwerkz/agent-skills-cli.svg?style=flat-square&color=blue)](https://www.npmjs.com/package/@dubwerkz/agent-skills-cli)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/unclecatvn/agent-skills?style=flat-square&color=yellow)](https://github.com/unclecatvn/agent-skills/stargazers)
-[![GitHub last commit](https://img.shields.io/github/last-commit/unclecatvn/agent-skills?style=flat-square)](https://github.com/unclecatvn/agent-skills/commits/main)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/unclecatvn/agent-skills/pulls)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-
-</div>
+The project packages curated Odoo references, workflow guidance, and install tooling so an AI agent can load the right Odoo knowledge for the project it is editing.
 
 ---
 
 ## Table of Contents
 
-- [What is Agent Skills?](#what-is-agent-skills)
-- [Why use it?](#why-use-it)
+- [Why This Exists](#why-this-exists)
 - [Quick Start](#quick-start)
-- [Real-World Example](#real-world-example)
-- [What's Inside?](#whats-inside)
-  - [Skills — Framework Documentation](#skills--framework-documentation)
-  - [Agents — Autonomous Reviewers](#agents--autonomous-reviewers)
-  - [Rules — Coding Standards](#rules--coding-standards)
-- [Targeting an Odoo Version](#targeting-an-odoo-version)
+- [Codex Project Install](#codex-project-install)
+- [Codex Plugin](#codex-plugin)
+- [CLI Usage](#cli-usage)
+- [Available Skills](#available-skills)
+- [Odoo Version Routing](#odoo-version-routing)
+- [Supported Tools](#supported-tools)
 - [Project Structure](#project-structure)
-- [Supported IDEs](#supported-ides)
-- [How It Works](#how-it-works)
-- [Stats](#stats)
-- [Contributing](#contributing)
+- [Development](#development)
 - [Links](#links)
 
 ---
 
-## What is Agent Skills?
+## Why This Exists
 
-**Agent Skills** is a collection of documentation and specialized agents that supercharge AI coding assistants like Cursor, Claude Code, Windsurf, and Aider.
+Generic AI coding assistants often mix Odoo versions or miss framework-specific details. Odoo Agent Skills gives the assistant project-local context for:
 
-Think of it as a **knowledge pack** — when you add Agent Skills to your project, your AI assistant gains access to thousands of lines of curated technical expertise about Odoo and related workflows. That means better code suggestions, fewer version-mismatch bugs, and more helpful responses.
+- Odoo 16, 17, 18, and 19 API differences
+- module manifests, models, fields, views, security, reports, controllers, migrations, tests, and OWL
+- Odoo-specific code review and trace workflows
+- project-level routing rules through `AGENTS.md` for Codex
+- clear guidance to avoid unrelated Superpowers workflows for Odoo tasks unless explicitly requested
 
-Each Odoo skill pack is pinned to a specific major version (**16.0 · 17.0 · 18.0 · 19.0**) with an `api-highlights.md` file that captures the rules that differ between versions.
-
----
-
-## Why use it?
-
-| Without Agent Skills | With Agent Skills |
-|---|---|
-| Generic "how to write a Python function" | Framework-specific "how to write an Odoo model with proper ORM patterns" |
-| AI guesses at framework conventions | AI follows documented best practices |
-| You re-explain project context every session | Context lives in the repo — AI reads it automatically |
-| Subtle bugs from outdated or mixed-version advice | Version-pinned guides (Odoo 16 / 17 / 18 / 19) |
-| Generic security suggestions | Enforced security rules for enterprise applications |
+| Without Odoo Agent Skills | With Odoo Agent Skills |
+|---------------------------|-------------------------|
+| May mix Odoo 16/17/18/19 syntax | Loads the installed Odoo version guide |
+| Generic Python/XML suggestions | Odoo-specific ORM, XML, security, and manifest guidance |
+| Manual context copy-paste | Project-local `.codex/skills` + `AGENTS.md` router |
 
 ---
 
 ## Quick Start
 
-### Option 1 — Codex plugin (recommended for Codex)
-
-This repository includes a Codex plugin manifest at [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json). Install the plugin from GitHub/your Codex marketplace to make the bundled skills discoverable in Codex.
-
-For deterministic per-project Odoo behavior, run the project setup after enabling the plugin:
+GitHub is the preferred install source.
 
 ```bash
-npx github:dubwerkz/agent-skills init --ai codex --project --skill skills --version odoo-18.0
+# Install Odoo 18 skill locally into the current Codex project
+npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
 ```
 
-That command installs the selected skill into `.codex/skills/<skill-name>` and creates/updates the project root `AGENTS.md` as a context-aware skill router. When Odoo files or tracebacks are in context, the router points agents to the installed Odoo skill version and tells them to avoid Superpowers plugins/skills by default.
+This creates or updates:
 
-### Option 2 — Cursor Skills
-
-Install the full repository into your project:
-
-```bash
-npx skills add unclecatvn/agent-skills
+```text
+.codex/skills/odoo-18/SKILL.md
+AGENTS.md
 ```
 
-Your AI assistant will discover skills, agents, and rules from the repo automatically.
-
-### Option 3 — CLI (pick a skill pack and version)
-
-Install a specific pack into your project with the bundled CLI:
-
-```bash
-# List available Odoo versions from GitHub
-npx github:dubwerkz/agent-skills versions skills
-
-# Or use the npm package, if installed/published
-npx @dubwerkz/agent-skills-cli versions skills
-
-# Install Odoo 18 guides for Cursor
-npx @dubwerkz/agent-skills-cli init --ai cursor --skill skills --version odoo-18.0
-
-# Install Odoo 18 guides for Codex globally
-npx @dubwerkz/agent-skills-cli init --ai codex --skill skills --version odoo-18.0
-
-# Install Odoo 18 guides for the current Codex project only
-npx @dubwerkz/agent-skills-cli init --ai codex --project --skill skills --version odoo-18.0
-
-# Install for all supported assistants
-npx @dubwerkz/agent-skills-cli init --ai all --skill skills --version odoo-19.0
-```
-
-Supported `--ai` targets: `cursor`, `claude`, `codex`, `antigravity`, `kiro`, `docs`, `all`.
-
-Codex installs globally into `$CODEX_HOME/skills/<skill-name>` when `CODEX_HOME` is set, otherwise `~/.codex/skills/<skill-name>`. Add `--project` to install into the current project's `.codex/skills/<skill-name>` and create/update the project root `AGENTS.md` with Odoo skill routing plus Superpowers-avoidance guidance.
-
-For project-local installs, the generated `AGENTS.md` block acts as a context-aware skill router: it lists installed `.codex/skills/*` entries, includes their trigger summaries from `SKILL.md`, and makes Odoo routing mandatory when Odoo files or tracebacks are in context.
-
-Other installable packs: `code-review`, `dtg-base`, `flow-diagram`, `odoo-commit`, `slide`.
-
-### Option 4 — Claude Code plugin
-
-Install via the Claude plugin marketplace defined in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json). The plugin bundles Odoo skill packs (16–19), code review, DTG Base, Odoo Commit, Flow Diagram, slide decks, and the Odoo review/tracer agents.
+After that, Codex can detect Odoo context in the project and route to the installed project-local Odoo skill.
 
 ---
 
-## Real-World Example
+## Codex Project Install
 
-**Prompt:**
-> *"Add a computed field `total_with_tax` to `sale.order` that sums line totals plus VAT."*
+Use `--project` when the skill should belong to one repository instead of your global Codex home.
 
-<table>
-<tr>
-<th>Without Agent Skills</th>
-<th>With Agent Skills</th>
-</tr>
-<tr>
-<td valign="top">
+```bash
+# Odoo 16
+npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-16.0
 
-```python
-# Generic guess — may use
-# wrong API for your Odoo version
-total_with_tax = fields.Float(
-    compute='_compute_total'
-)
+# Odoo 17
+npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-17.0
 
-def _compute_total(self):
-    for rec in self:
-        rec.total_with_tax = sum(
-            l.price * 1.1
-            for l in rec.order_line
-        )
+# Odoo 18
+npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
+
+# Odoo 19
+npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-19.0
 ```
 
-</td>
-<td valign="top">
+Project install behavior:
 
-```python
-# Odoo conventions (16 / 17 / 18 / 19):
-# Monetary + @api.depends + store
-total_with_tax = fields.Monetary(
-    compute='_compute_total_with_tax',
-    store=True,
-    currency_field='currency_id',
-)
-
-@api.depends('order_line.price_total')
-def _compute_total_with_tax(self):
-    for order in self:
-        order.total_with_tax = sum(
-            order.order_line.mapped('price_total')
-        )
-```
-
-</td>
-</tr>
-</table>
+- copies the selected skill into `.codex/skills/<skill-name>`
+- creates `AGENTS.md` if it does not exist
+- preserves existing `AGENTS.md` content
+- updates only the managed `odoo-agent-skills` block on repeated installs
+- tells Codex to use installed Odoo skills for Odoo files, addons, manifests, XML views, security, migrations, reports, controllers, OWL, and tracebacks
+- tells Codex not to use Superpowers for Odoo work by default
 
 ---
 
-## What's Inside?
+## Codex Plugin
 
-### Skills — Framework Documentation
+This repository also includes a Codex plugin manifest at `.codex-plugin/plugin.json`.
 
-In-depth guides written for AI consumption. Each Odoo pack includes 18 topic guides plus `api-highlights.md`, `SKILL.md`, `CLAUDE.md`, and `AGENTS.md`.
+Plugin concept:
 
-| Skill | Description |
-|-------|-------------|
-| **[Odoo 16.0](skills/odoo-16.0/)** | Odoo 16 development — `<tree>` views, `attrs`/`states` modifiers, `group_operator=`, explicit chatter block, `kanban-box` templates |
-| **[Odoo 17.0](skills/odoo-17.0/)** | Odoo 17 development — `<tree>` views, direct-expression modifiers (no `attrs`), `group_operator=`, JSONB translations, OWL 2.8 |
-| **[Odoo 18.0](skills/odoo-18.0/)** | Odoo 18 development — `<list>` views, `aggregator=`, `<chatter/>` shortcut, ORM, security, OWL, reports, migrations, performance |
-| **[Odoo 19.0](skills/odoo-19.0/)** | Odoo 19 development — optional `_name`, `models.Constraint` / `models.Index`, current view and frontend conventions |
-| **[Odoo Commit](skills/odoo-commit/)** | Guides Odoo-style commit creation — message drafting, amend-vs-new-commit decisions, explicit staging, `git commit -F`, and local history cleanup before PRs |
-| **[Flow Diagram](skills/flow-diagram/)** | Interactive self-contained HTML+SVG flow/architecture diagrams — zoom/pan, click-to-highlight flows, traveling dots, collision checkers |
-| **[DTG Base](skills/dtg-base/)** | DTGBase utilities — date/period, timezone, batch processing, barcode, Vietnamese text, file helpers |
-| **[Code Review](skills/code-review/)** | Receiving feedback, requesting reviews, and verification gates for evidence-based development |
-| **[Slide (AI Vibe Slides)](skills/slide/)** | Self-contained HTML/React slide decks for fullscreen presentation |
+- a plugin bundles skills and metadata so Codex can discover them as one package
+- plugin installation is useful for making the skill collection available in Codex
+- project-local behavior still comes from the CLI `--project` install because it writes `.codex/skills` and `AGENTS.md` inside the repository
 
-#### Odoo reference guide topics (each version)
+Recommended workflow:
 
-actions · controllers · data files · decorators · development workflow · fields · manifest · migrations · mixins · models · OWL · performance · reports · security · testing · transactions · translations · views
-
-### Agents — Autonomous Reviewers
-
-Specialized agents that act as senior technical leads:
-
-| Agent | What it does |
-|-------|--------------|
-| **[Odoo Code Review](agents/odoo-code-review/SKILL.md)** | Reviews Odoo code with scoring and structured feedback. Version-aware (16 / 17 / 18 / 19). |
-| **[Odoo Code Tracer](agents/odoo-code-tracer/SKILL.md)** | Traces execution flow from an entry point through the call graph. Version-aware (16 / 17 / 18 / 19). |
-| **[Planner](agents/planner.md)** | Breaks down complex features into actionable implementation steps |
-
-### Rules — Coding Standards
-
-Enforced patterns for consistent, secure code:
-
-| Rule | Description |
-|------|-------------|
-| **[Coding Style](rules/coding-style.md)** | Naming, imports, and code structure |
-| **[Security](rules/security.md)** | Security patterns for enterprise applications |
+1. Install or enable the plugin when you want the whole collection available in Codex.
+2. Run `odoo-agent-skills init --ai codex --project ...` inside each Odoo repository that needs deterministic project routing.
 
 ---
 
-## Targeting an Odoo Version
+## CLI Usage
 
-The Odoo agents automatically pick the right reference pack (`skills/odoo-16.0/` … `odoo-19.0/`). Resolution order:
+Run from GitHub:
 
-1. **Explicit argument** passed to the agent (e.g. `odoo_version: "19.0"`).
-2. **Project config**, in order:
-   - `.odoo-version` at the repo root
-   - `odoo_version` in `.claude/odoo.json`
-   - `odoo.version` in `package.json`
-   - `tool.odoo.version` in `pyproject.toml`
-3. **Manifest heuristic** — dominant major version from workspace `__manifest__.py` files.
-4. **Fallback** — latest supported (`19.0`). The agent states the assumption in its output.
+```bash
+npx github:dubwerkz/odoo-agent-skills help
+npx github:dubwerkz/odoo-agent-skills skills
+npx github:dubwerkz/odoo-agent-skills versions skills
+```
 
-Per-version rule deltas live in each pack's `references/api-highlights.md`. Examples:
+Install examples:
 
-| Topic | 16.0 | 17.0 | 18.0+ |
-|-------|------|------|-------|
-| List view tag | `<tree>` | `<tree>` | `<list>` |
+```bash
+# Codex project-local install
+npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
+
+# Codex global install
+npx github:dubwerkz/odoo-agent-skills init --ai codex --skill skills --version odoo-18.0
+
+# Cursor install via CLI
+npx github:dubwerkz/odoo-agent-skills init --ai cursor --skill skills --version odoo-18.0
+
+# Docs-only export
+npx github:dubwerkz/odoo-agent-skills init --ai docs --skill skills --version odoo-18.0
+```
+
+The npm package is still available as a fallback:
+
+```bash
+npx @dubwerkz/odoo-agent-skills help
+npx @dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
+```
+
+---
+
+## Available Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `skills/odoo-16.0` | Odoo 16 reference pack |
+| `skills/odoo-17.0` | Odoo 17 reference pack |
+| `skills/odoo-18.0` | Odoo 18 reference pack |
+| `skills/odoo-19.0` | Odoo 19 reference pack |
+| `skills/odoo-commit` | Odoo-style commit message and workflow guidance |
+| `skills/code-review` | General code review workflow |
+| `skills/dtg-base` | DTG Base development guidance |
+| `skills/flow-diagram` | HTML/SVG flow and architecture diagram guidance |
+| `skills/slide` | HTML/React slide deck guidance |
+
+Agent-oriented guides are also included under `agents/`:
+
+- `agents/odoo-code-review`
+- `agents/odoo-code-tracer`
+- `agents/planner.md`
+
+---
+
+## Odoo Version Routing
+
+Install the Odoo skill that matches the target project version.
+
+| Odoo version | Install version | Codex skill path |
+|--------------|-----------------|------------------|
+| 16.0 | `odoo-16.0` | `.codex/skills/odoo-16` |
+| 17.0 | `odoo-17.0` | `.codex/skills/odoo-17` |
+| 18.0 | `odoo-18.0` | `.codex/skills/odoo-18` |
+| 19.0 | `odoo-19.0` | `.codex/skills/odoo-19` |
+
+Key version differences covered by the guides:
+
+| Topic | Odoo 16 | Odoo 17 | Odoo 18+ |
+|-------|---------|---------|----------|
 | Dynamic modifiers | `attrs` / `states` | direct expressions | direct expressions |
+| List view root tag | `<tree>` | `<tree>` | `<list>` |
 | Field aggregation | `group_operator=` | `group_operator=` | `aggregator=` |
-| Chatter | explicit block | explicit block | `<chatter/>` |
+| Chatter layout | explicit `oe_chatter` block | explicit `oe_chatter` block | `<chatter/>` shortcut |
+
+---
+
+## Supported Tools
+
+| Tool | Install method |
+|------|----------------|
+| Codex | CLI `--ai codex`, ideally with `--project` |
+| Cursor | CLI `--ai cursor` or `npx skills add dubwerkz/odoo-agent-skills` |
+| Claude Code | `.claude-plugin` manifest or CLI `--ai claude` |
+| Antigravity | CLI `--ai antigravity` |
+| Kiro | CLI `--ai kiro` |
+| Plain docs | CLI `--ai docs` |
 
 ---
 
 ## Project Structure
 
-```
-agent-skills/
-├── skills/
-│   ├── odoo-16.0/             # Odoo 16 guides + api-highlights
-│   ├── odoo-17.0/             # Odoo 17 guides + api-highlights
-│   ├── odoo-18.0/             # Odoo 18 guides + api-highlights
-│   ├── odoo-19.0/             # Odoo 19 guides + api-highlights
-│   ├── odoo-commit/           # Odoo-style commit workflow and message guidance
-│   ├── flow-diagram/          # Interactive HTML+SVG flow/architecture diagrams
-│   ├── dtg-base/              # DTGBase utilities
-│   ├── code-review/           # Code review workflow
-│   └── slide/                 # HTML/React slide decks
-├── agents/
-│   ├── odoo-code-review/      # Version-aware Odoo reviewer
-│   ├── odoo-code-tracer/      # Version-aware call-graph tracer
-│   └── planner.md             # Feature planning agent
-├── rules/                     # Coding style and security
-├── bin/                       # CLI (`agent-skills`)
-├── tests/                     # Structural validator (`npm test`)
+```text
+odoo-agent-skills/
 ├── .codex-plugin/             # Codex plugin manifest
-├── .claude-plugin/            # Claude Code plugin + marketplace
-├── .github/workflows/         # CI, SkillSpector scan, release guards
+├── .claude-plugin/            # Claude Code plugin metadata
+├── agents/                    # Agent workflows and reviewers
+├── bin/                       # CLI (`odoo-agent-skills`)
+├── docs/                      # Supporting docs
+├── lib/                       # Shared assets
+├── rules/                     # Style and security rules
+├── skills/                    # Installable skill packs
+├── tests/                     # Structural validation
 ├── CHANGELOG.md
-└── lib/                       # Shared assets (images)
+├── package.json
+└── README.md
 ```
 
 ---
 
-## Supported IDEs
+## Development
 
-Agent Skills works with popular AI-powered IDEs:
-
-| IDE / Tool | Install method |
-|------------|----------------|
-| **Cursor** | `npx skills add unclecatvn/agent-skills` or CLI `--ai cursor` |
-| **Claude Code** | Plugin marketplace or CLI `--ai claude` |
-| **Codex** | Codex plugin + project setup via CLI `--ai codex --project` |
-| **Antigravity** | CLI `--ai antigravity` |
-| **Kiro** | CLI `--ai kiro` |
-| **Plain docs folder** | CLI `--ai docs` |
-
----
-
-## How It Works
-
-```mermaid
-flowchart LR
-    A[Developer] -->|writes prompt| B[AI Assistant]
-    B -->|reads| C[Agent Skills]
-    C --> D[Version-pinned Odoo guides]
-    C --> E[Review agents]
-    C --> F[Security rules]
-    D --> G[Better code]
-    E --> G
-    F --> G
-    G -->|returns| A
-
-    style C fill:#4f46e5,stroke:#312e81,color:#fff
-    style G fill:#10b981,stroke:#064e3b,color:#fff
-```
-
-1. Add Agent Skills to your project (Cursor, CLI, or Claude plugin).
-2. Your AI assistant reads the relevant skill files for the task.
-3. Odoo agents resolve the target version and load the matching reference pack.
-4. You get framework-specific guidance instead of generic guesses.
-
----
-
-## Stats
-
-| Metric | Value |
-|--------|-------|
-| Documentation | ~57,000 lines |
-| Odoo skill packs | 4 (16.0, 17.0, 18.0, 19.0) |
-| Other skill packs | 5 (DTG Base, Code Review, Odoo Commit, Flow Diagram, Slide) |
-| Agents | 3 (Odoo Code Review, Odoo Code Tracer, Planner) |
-| Rules | 2 (Coding Style, Security) |
-| Current release | [1.0.13](CHANGELOG.md) |
-| License | MIT |
-
----
-
-## Contributing
-
-Contributions are welcome:
-
-- **Improve Odoo guides** — fix errors, add examples, keep version deltas accurate
-- **Add new skill packs** — follow the structure in `skills/odoo-18.0/`
-- **Extend agents** — build specialized reviewers or planners under `agents/`
-- **Report issues** — open an issue if something is missing or broken
-
-Before opening a PR:
+Run validations before publishing or opening a PR:
 
 ```bash
-npm test          # structural validation (SKILL.md frontmatter, plugin paths, changelog)
+node --check bin/odoo-agent-skills.js
+npm test
+npm pack --dry-run
 ```
 
-CI also runs [SkillSpector](https://github.com/NVIDIA/skillspector) on `./skills/` with a baseline in `.skillspector-baseline.yaml`. Version bumps require a matching section in `CHANGELOG.md`.
-
-[![Contributors](https://img.shields.io/github/contributors/unclecatvn/agent-skills?style=flat-square)](https://github.com/unclecatvn/agent-skills/graphs/contributors)
-[![Open Issues](https://img.shields.io/github/issues/unclecatvn/agent-skills?style=flat-square)](https://github.com/unclecatvn/agent-skills/issues)
-[![Open PRs](https://img.shields.io/github/issues-pr/unclecatvn/agent-skills?style=flat-square)](https://github.com/unclecatvn/agent-skills/pulls)
+Release notes are tracked in `CHANGELOG.md`. The package version in `package.json` must have a matching changelog section.
 
 ---
 
 ## Links
 
-- [Changelog](CHANGELOG.md)
-- [Issues](https://github.com/unclecatvn/agent-skills/issues)
-- [Discussions](https://github.com/unclecatvn/agent-skills/discussions)
-- [Releases](https://github.com/unclecatvn/agent-skills/releases)
-- [npm Package](https://www.npmjs.com/package/@dubwerkz/agent-skills-cli)
+- [Repository](https://github.com/dubwerkz/odoo-agent-skills)
+- [Issues](https://github.com/dubwerkz/odoo-agent-skills/issues)
+- [Discussions](https://github.com/dubwerkz/odoo-agent-skills/discussions)
+- [Releases](https://github.com/dubwerkz/odoo-agent-skills/releases)
+- [npm Package](https://www.npmjs.com/package/@dubwerkz/odoo-agent-skills)
 
 ---
 
 <div align="center">
 
-_If you find this project helpful, please consider giving it a star._
+_If this project helps your Odoo workflow, please consider giving it a star._
 
-[![Star History Chart](https://api.star-history.com/svg?repos=unclecatvn/agent-skills&type=Date)](https://star-history.com/#unclecatvn/agent-skills&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=dubwerkz/odoo-agent-skills&type=Date)](https://star-history.com/#dubwerkz/odoo-agent-skills&Date)
 
 </div>

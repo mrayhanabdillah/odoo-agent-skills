@@ -70,7 +70,7 @@ class MyModel(models.Model):
 ## File Structure
 
 ```
-agent-skills/skills/dtg-base/
+odoo-agent-skills/skills/dtg-base/
 ├── SKILL.md                       # This file - master index
 ├── odoo-18-dtg-base-guide.md      # Complete DTG Base utilities reference
 └── README.md                      # Skill overview

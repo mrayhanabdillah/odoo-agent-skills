@@ -1,9 +1,9 @@
 {
-  "name": "@dubwerkz/agent-skills-cli",
+  "name": "@dubwerkz/odoo-agent-skills",
   "version": "1.0.15",
-  "description": "CLI and docs for installing agent skills by version.",
+  "description": "CLI and docs for installing Odoo agent skills by version.",
   "bin": {
-    "agent-skills": "bin/agent-skills.js"
+    "odoo-agent-skills": "bin/odoo-agent-skills.js"
   },
   "scripts": {
     "test": "node tests/test-skills.js",
@@ -19,7 +19,7 @@
     "LICENSE"
   ],
   "license": "MIT",
-  "author": "UncleCat",
+  "author": "Dubwerkz",
   "engines": {
     "node": ">=18"
   }

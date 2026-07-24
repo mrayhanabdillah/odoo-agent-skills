@@ -6,8 +6,8 @@
     "name": "Dubwerkz",
     "url": "https://github.com/dubwerkz"
   },
-  "homepage": "https://github.com/dubwerkz/agent-skills",
-  "repository": "https://github.com/dubwerkz/agent-skills",
+  "homepage": "https://github.com/dubwerkz/odoo-agent-skills",
+  "repository": "https://github.com/dubwerkz/odoo-agent-skills",
   "license": "MIT",
   "keywords": [
     "odoo",

@@ -11,27 +11,27 @@ const DEFAULT_AI = "cursor";
 const DEFAULT_SKILL = "odoo";
 const DEFAULT_VERSION = "18.0";
 const EXCLUDED_DIRS = new Set(["bin", "node_modules"]);
-const GITHUB_REPO = "dubwerkz/agent-skills";
-const NPM_PACKAGE = "@dubwerkz/agent-skills-cli";
+const GITHUB_REPO = "dubwerkz/odoo-agent-skills";
+const NPM_PACKAGE = "@dubwerkz/odoo-agent-skills";
 
 // Config file path for storing last update check
-const CONFIG_DIR = path.join(os.homedir(), ".agent-skills");
+const CONFIG_DIR = path.join(os.homedir(), ".odoo-agent-skills");
 const UPDATE_CHECK_FILE = path.join(CONFIG_DIR, "update-check.json");
 const UPDATE_CHECK_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
-const CODEX_AGENTS_START = "<!-- agent-skills:codex-project:start -->";
-const CODEX_AGENTS_END = "<!-- agent-skills:codex-project:end -->";
+const CODEX_AGENTS_START = "<!-- odoo-agent-skills:codex-project:start -->";
+const CODEX_AGENTS_END = "<!-- odoo-agent-skills:codex-project:end -->";
 
 function printHelp() {
   const text = `
-agent-skills - Install agent skills docs by version
+odoo-agent-skills - Install Odoo agent skills by version
 
 Usage:
-  agent-skills init --ai <assistant> <skill> [version]
-  agent-skills init --ai <assistant> <skill> --version <version>
-  agent-skills versions [skill]
-  agent-skills skills
-  agent-skills update
-  agent-skills help
+  odoo-agent-skills init --ai <assistant> <skill> [version]
+  odoo-agent-skills init --ai <assistant> <skill> --version <version>
+  odoo-agent-skills versions [skill]
+  odoo-agent-skills skills
+  odoo-agent-skills update
+  odoo-agent-skills help
 
 Options:
   --ai <assistant>        cursor | claude | codex | antigravity | kiro | docs | all
@@ -466,7 +466,7 @@ function buildCodexAgentsBlock(projectRoot) {
   const odooSkills = skills.filter((name) => /^odoo-\d+$/.test(name));
   const lines = [
     CODEX_AGENTS_START,
-    "## Agent Skills (Codex)",
+    "## Odoo Agent Skills (Codex)",
     "",
     "- Project-local Codex skills are installed in `.codex/skills/`.",
     "- Treat this block as the project-local skill router. Before answering, planning, debugging, or editing, match the user's request and touched files against the installed skills below.",
@@ -601,7 +601,7 @@ function fetchLatestNpmVersion() {
       hostname: "registry.npmjs.org",
       path: `/${NPM_PACKAGE.replace("/", "%2F")}`,
       method: "GET",
-      headers: { "User-Agent": "agent-skills-cli" },
+      headers: { "User-Agent": "odoo-agent-skills" },
     };
 
     https
@@ -629,7 +629,7 @@ function fetchLatestGitHubRelease() {
       path: `/repos/${GITHUB_REPO}/releases/latest`,
       method: "GET",
       headers: {
-        "User-Agent": "agent-skills-cli",
+        "User-Agent": "odoo-agent-skills",
         Accept: "application/vnd.github.v3+json",
       },
     };

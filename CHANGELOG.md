@@ -5,10 +5,12 @@ All notable changes to this project will be documented in this file.
 ## [1.0.15]
 
 ### Changed
-- Project-local Codex installs (`--ai codex --project`) now create or update the project root `AGENTS.md` with a managed Agent Skills block.
+- Renamed the package and CLI branding from `agent-skills` to `odoo-agent-skills`; the npm package is now `@dubwerkz/odoo-agent-skills` and the CLI binary is `odoo-agent-skills`.
+- Project-local Codex installs (`--ai codex --project`) now create or update the project root `AGENTS.md` with a managed Odoo Agent Skills block.
 - The managed `AGENTS.md` block now acts as a context-aware project-local skill router, listing installed `.codex/skills/*` entries with trigger summaries from each `SKILL.md`.
 - Odoo routing is mandatory when Odoo files or tracebacks are in context, and the block tells agents to avoid Superpowers plugins/skills for Odoo tasks by default.
 - The CLI update checker now points at the Dubwerkz GitHub repository.
+- `README.md` was rewritten around the `odoo-agent-skills` name, GitHub-first installation, Codex project-local setup, and Codex plugin usage.
 
 ### Added
 - `.codex-plugin/plugin.json` — Codex plugin manifest for distributing the bundled skills as a Codex plugin.
@@ -47,7 +49,7 @@ Rewrote the README to reflect the current repository: seven skill packs, version
 
 ### Changed
 - `README.md` — updated tagline, stats (~57k lines), and skill inventory; removed references to skills no longer in the repo (payment-integration, brainstorming, writing-skills, mcp-builder).
-- `README.md` — documented three install methods: Cursor Skills (`npx skills add`), CLI (`@unclecat/agent-skills-cli init`), and Claude Code plugin.
+- `README.md` — documented three install methods: Cursor Skills (`npx skills add`), CLI (`@dubwerkz/odoo-agent-skills init`), and Claude Code plugin.
 - `README.md` — added Odoo version-targeting section with a 16/17/18+ comparison table; corrected Odoo 16 modifier guidance (`attrs`/`states`, not direct expressions).
 - `README.md` — expanded project structure, contributing notes (SkillSpector baseline, changelog guard), and supported IDE matrix.
 
@@ -179,7 +181,7 @@ Focused on release-process clarity and documentation cleanup for the `1.0.6` pub
 - Bumped package version in `package.json` from `1.0.5` to `1.0.6`.
 
 #### Reference
-- Compare: https://github.com/unclecatvn/agent-skills/compare/v1.0.5...v1.0.6
+- Compare: https://github.com/dubwerkz/odoo-agent-skills/compare/v1.0.5...v1.0.6
 
 ## [1.0.5]
 
@@ -198,7 +200,7 @@ Release focused on documentation streamlining and release workflow improvements.
 - Bumped package version in `package.json` from `1.0.4` to `1.0.5`.
 
 #### Reference
-- Compare: https://github.com/unclecatvn/agent-skills/compare/v1.0.4...v1.0.5
+- Compare: https://github.com/dubwerkz/odoo-agent-skills/compare/v1.0.4...v1.0.5
 
 ## [1.0.4]
 
@@ -260,7 +262,7 @@ Focused on Odoo 18 transaction safety and concurrency control.
 ## [1.0.0]
 
 ### Release Description
-First stable release of Agent Skills as a comprehensive knowledge pack for AI coding assistants.
+First stable release of Odoo Agent Skills as a comprehensive knowledge pack for AI coding assistants.
 
 #### Added
 - 8 skill packs: Odoo 18.0, Odoo 19.0, DTG Base, Payment Integration, Code Review, Brainstorming, Writing Skills, MCP Builder.

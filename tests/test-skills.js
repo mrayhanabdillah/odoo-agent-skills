@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Structural validation for the agent-skills repo.
+ * Structural validation for the odoo-agent-skills repo.
  *
  * Checks:
  *   1. Every skills/* and agents/* folder has a SKILL.md with
@@ -166,8 +166,8 @@ function validateChangelog() {
 }
 
 function validateCodexCliInstall() {
-  const cliPath = path.join(ROOT, "bin", "agent-skills.js");
-  const codexHome = fs.mkdtempSync(path.join(os.tmpdir(), "agent-skills-codex-"));
+  const cliPath = path.join(ROOT, "bin", "odoo-agent-skills.js");
+  const codexHome = fs.mkdtempSync(path.join(os.tmpdir(), "odoo-agent-skills-codex-"));
   const globalResult = spawnSync(
     process.execPath,
     [cliPath, "init", "--ai", "codex", "--skill", "skills", "--version", "odoo-18.0"],
@@ -191,7 +191,7 @@ function validateCodexCliInstall() {
     return;
   }
 
-  const projectRoot = fs.mkdtempSync(path.join(os.tmpdir(), "agent-skills-project-"));
+  const projectRoot = fs.mkdtempSync(path.join(os.tmpdir(), "odoo-agent-skills-project-"));
   const projectAgentsPath = path.join(projectRoot, "AGENTS.md");
   fs.writeFileSync(projectAgentsPath, "# Existing Project Instructions\n\nKeep this line.\n", "utf8");
   const projectResult = spawnSync(
