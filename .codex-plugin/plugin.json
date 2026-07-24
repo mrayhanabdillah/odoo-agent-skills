@@ -4,10 +4,10 @@
   "description": "Version-aware Odoo development skills for Codex, including Odoo 16, 17, 18, 19 references and project workflow helpers.",
   "author": {
     "name": "Dubwerkz",
-    "url": "https://github.com/dubwerkz"
+    "url": "https://github.com/mrayhanabdillah"
   },
-  "homepage": "https://github.com/dubwerkz/odoo-agent-skills",
-  "repository": "https://github.com/dubwerkz/odoo-agent-skills",
+  "homepage": "https://github.com/mrayhanabdillah/odoo-agent-skills",
+  "repository": "https://github.com/mrayhanabdillah/odoo-agent-skills",
   "license": "MIT",
   "keywords": [
     "odoo",

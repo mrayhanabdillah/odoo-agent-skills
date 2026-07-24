@@ -8,7 +8,7 @@ Setup guide for using Odoo 19 documentation with AI coding assistants (Cursor, C
 
 ```bash
 # Add Odoo 19 skill to your project
-npx skills add dubwerkz/odoo-agent-skills
+npx skills add mrayhanabdillah/odoo-agent-skills
 ```
 
 Visit [https://skills.sh/](https://skills.sh/) for more installation options.
@@ -18,7 +18,7 @@ Visit [https://skills.sh/](https://skills.sh/) for more installation options.
 Configure once in Cursor settings:
 - `Settings` → `Rules` → `Add Remote Rule`
 - Source: `Git Repository`
-- URL: `git@github.com:dubwerkz/odoo-agent-skills.git`
+- URL: `git@github.com:mrayhanabdillah/odoo-agent-skills.git`
 - Branch: `19.0`
 - Subfolder: `skills/odoo-19.0/`
 
@@ -87,7 +87,7 @@ skills/odoo-19.0/
 | Setting | Value |
 |---------|-------|
 | Source | Git Repository |
-| URL | `git@github.com:dubwerkz/odoo-agent-skills.git` |
+| URL | `git@github.com:mrayhanabdillah/odoo-agent-skills.git` |
 | Branch | `19.0` |
 | Subfolder | `skills/odoo-19.0/` |
 
@@ -119,7 +119,7 @@ skills/odoo-19.0/
 
 ```bash
 # Install via skills.sh
-npx skills add dubwerkz/odoo-agent-skills
+npx skills add mrayhanabdillah/odoo-agent-skills
 ```
 
 Claude Code reads:
@@ -140,7 +140,7 @@ Claude Code reads:
 
 ## Cursor / Claude Skills Folder
 
-After installing via `npx skills add dubwerkz/odoo-agent-skills`, the skill is placed at:
+After installing via `npx skills add mrayhanabdillah/odoo-agent-skills`, the skill is placed at:
 
 ```
 .cursor/skills/
@@ -168,6 +168,6 @@ After installing via `npx skills add dubwerkz/odoo-agent-skills`, the skill is p
 
 ## Repository
 
-**URL**: `git@github.com:dubwerkz/odoo-agent-skills.git`
+**URL**: `git@github.com:mrayhanabdillah/odoo-agent-skills.git`
 **Branch**: `19.0`
 **License**: MIT

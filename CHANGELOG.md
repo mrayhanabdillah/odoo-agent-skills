@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - Project-local Codex installs (`--ai codex --project`) now create or update the project root `AGENTS.md` with a managed Odoo Agent Skills block.
 - The managed `AGENTS.md` block now acts as a context-aware project-local skill router, listing installed `.codex/skills/*` entries with trigger summaries from each `SKILL.md`.
 - Odoo routing is mandatory when Odoo files or tracebacks are in context, and the block tells agents to avoid Superpowers plugins/skills for Odoo tasks by default.
-- The CLI update checker now points at the Dubwerkz GitHub repository.
+- The CLI update checker now points at the `mrayhanabdillah/odoo-agent-skills` GitHub repository.
 - `README.md` was rewritten around the `odoo-agent-skills` name, GitHub-first installation, Codex project-local setup, and Codex plugin usage.
 
 ### Added
@@ -181,7 +181,7 @@ Focused on release-process clarity and documentation cleanup for the `1.0.6` pub
 - Bumped package version in `package.json` from `1.0.5` to `1.0.6`.
 
 #### Reference
-- Compare: https://github.com/dubwerkz/odoo-agent-skills/compare/v1.0.5...v1.0.6
+- Compare: https://github.com/mrayhanabdillah/odoo-agent-skills/compare/v1.0.5...v1.0.6
 
 ## [1.0.5]
 
@@ -200,7 +200,7 @@ Release focused on documentation streamlining and release workflow improvements.
 - Bumped package version in `package.json` from `1.0.4` to `1.0.5`.
 
 #### Reference
-- Compare: https://github.com/dubwerkz/odoo-agent-skills/compare/v1.0.4...v1.0.5
+- Compare: https://github.com/mrayhanabdillah/odoo-agent-skills/compare/v1.0.4...v1.0.5
 
 ## [1.0.4]
 

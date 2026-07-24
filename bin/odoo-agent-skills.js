@@ -11,7 +11,7 @@ const DEFAULT_AI = "cursor";
 const DEFAULT_SKILL = "odoo";
 const DEFAULT_VERSION = "18.0";
 const EXCLUDED_DIRS = new Set(["bin", "node_modules"]);
-const GITHUB_REPO = "dubwerkz/odoo-agent-skills";
+const GITHUB_REPO = "mrayhanabdillah/odoo-agent-skills";
 const NPM_PACKAGE = "@dubwerkz/odoo-agent-skills";
 
 // Config file path for storing last update check

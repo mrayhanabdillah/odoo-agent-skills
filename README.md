@@ -4,9 +4,9 @@
 
 [![npm version](https://img.shields.io/npm/v/@dubwerkz/odoo-agent-skills.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@dubwerkz/odoo-agent-skills)
 [![npm downloads](https://img.shields.io/npm/dm/@dubwerkz/odoo-agent-skills.svg?style=flat-square&color=blue)](https://www.npmjs.com/package/@dubwerkz/odoo-agent-skills)
-[![GitHub stars](https://img.shields.io/github/stars/dubwerkz/odoo-agent-skills?style=flat-square&color=yellow)](https://github.com/dubwerkz/odoo-agent-skills/stargazers)
-[![GitHub last commit](https://img.shields.io/github/last-commit/dubwerkz/odoo-agent-skills?style=flat-square)](https://github.com/dubwerkz/odoo-agent-skills/commits/main)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/dubwerkz/odoo-agent-skills/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/mrayhanabdillah/odoo-agent-skills?style=flat-square&color=yellow)](https://github.com/mrayhanabdillah/odoo-agent-skills/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/mrayhanabdillah/odoo-agent-skills?style=flat-square)](https://github.com/mrayhanabdillah/odoo-agent-skills/commits/main)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/mrayhanabdillah/odoo-agent-skills/pulls)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 Version-aware Odoo skill packs for Codex and other AI coding assistants.
@@ -55,7 +55,7 @@ GitHub is the preferred install source.
 
 ```bash
 # Install Odoo 18 skill locally into the current Codex project
-npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
 ```
 
 This creates or updates:
@@ -75,16 +75,16 @@ Use `--project` when the skill should belong to one repository instead of your g
 
 ```bash
 # Odoo 16
-npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-16.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai codex --project --skill skills --version odoo-16.0
 
 # Odoo 17
-npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-17.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai codex --project --skill skills --version odoo-17.0
 
 # Odoo 18
-npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
 
 # Odoo 19
-npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-19.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai codex --project --skill skills --version odoo-19.0
 ```
 
 Project install behavior:
@@ -120,25 +120,25 @@ Recommended workflow:
 Run from GitHub:
 
 ```bash
-npx github:dubwerkz/odoo-agent-skills help
-npx github:dubwerkz/odoo-agent-skills skills
-npx github:dubwerkz/odoo-agent-skills versions skills
+npx github:mrayhanabdillah/odoo-agent-skills help
+npx github:mrayhanabdillah/odoo-agent-skills skills
+npx github:mrayhanabdillah/odoo-agent-skills versions skills
 ```
 
 Install examples:
 
 ```bash
 # Codex project-local install
-npx github:dubwerkz/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai codex --project --skill skills --version odoo-18.0
 
 # Codex global install
-npx github:dubwerkz/odoo-agent-skills init --ai codex --skill skills --version odoo-18.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai codex --skill skills --version odoo-18.0
 
 # Cursor install via CLI
-npx github:dubwerkz/odoo-agent-skills init --ai cursor --skill skills --version odoo-18.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai cursor --skill skills --version odoo-18.0
 
 # Docs-only export
-npx github:dubwerkz/odoo-agent-skills init --ai docs --skill skills --version odoo-18.0
+npx github:mrayhanabdillah/odoo-agent-skills init --ai docs --skill skills --version odoo-18.0
 ```
 
 The npm package is still available as a fallback:
@@ -199,7 +199,7 @@ Key version differences covered by the guides:
 | Tool | Install method |
 |------|----------------|
 | Codex | CLI `--ai codex`, ideally with `--project` |
-| Cursor | CLI `--ai cursor` or `npx skills add dubwerkz/odoo-agent-skills` |
+| Cursor | CLI `--ai cursor` or `npx skills add mrayhanabdillah/odoo-agent-skills` |
 | Claude Code | `.claude-plugin` manifest or CLI `--ai claude` |
 | Antigravity | CLI `--ai antigravity` |
 | Kiro | CLI `--ai kiro` |
@@ -243,10 +243,10 @@ Release notes are tracked in `CHANGELOG.md`. The package version in `package.jso
 
 ## Links
 
-- [Repository](https://github.com/dubwerkz/odoo-agent-skills)
-- [Issues](https://github.com/dubwerkz/odoo-agent-skills/issues)
-- [Discussions](https://github.com/dubwerkz/odoo-agent-skills/discussions)
-- [Releases](https://github.com/dubwerkz/odoo-agent-skills/releases)
+- [Repository](https://github.com/mrayhanabdillah/odoo-agent-skills)
+- [Issues](https://github.com/mrayhanabdillah/odoo-agent-skills/issues)
+- [Discussions](https://github.com/mrayhanabdillah/odoo-agent-skills/discussions)
+- [Releases](https://github.com/mrayhanabdillah/odoo-agent-skills/releases)
 - [npm Package](https://www.npmjs.com/package/@dubwerkz/odoo-agent-skills)
 
 ---
@@ -255,6 +255,6 @@ Release notes are tracked in `CHANGELOG.md`. The package version in `package.jso
 
 _If this project helps your Odoo workflow, please consider giving it a star._
 
-[![Star History Chart](https://api.star-history.com/svg?repos=dubwerkz/odoo-agent-skills&type=Date)](https://star-history.com/#dubwerkz/odoo-agent-skills&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=mrayhanabdillah/odoo-agent-skills&type=Date)](https://star-history.com/#mrayhanabdillah/odoo-agent-skills&Date)
 
 </div>

@@ -5,7 +5,7 @@ Setup guide for using the Odoo 16 pack with AI coding assistants.
 ## Quick Start
 
 ```bash
-npx skills add dubwerkz/odoo-agent-skills
+npx skills add mrayhanabdillah/odoo-agent-skills
 ```
 
 Use `skills/odoo-16.0/SKILL.md` as the entry point, then open the matching guide in `references/`.
