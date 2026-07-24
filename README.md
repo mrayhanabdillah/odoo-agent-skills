@@ -62,7 +62,19 @@ Each Odoo skill pack is pinned to a specific major version (**16.0 · 17.0 · 18
 
 ## Quick Start
 
-### Option 1 — Cursor Skills (recommended)
+### Option 1 — Codex plugin (recommended for Codex)
+
+This repository includes a Codex plugin manifest at [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json). Install the plugin from GitHub/your Codex marketplace to make the bundled skills discoverable in Codex.
+
+For deterministic per-project Odoo behavior, run the project setup after enabling the plugin:
+
+```bash
+npx github:dubwerkz/agent-skills init --ai codex --project --skill skills --version odoo-18.0
+```
+
+That command installs the selected skill into `.codex/skills/<skill-name>` and creates/updates the project root `AGENTS.md` as a context-aware skill router. When Odoo files or tracebacks are in context, the router points agents to the installed Odoo skill version and tells them to avoid Superpowers plugins/skills by default.
+
+### Option 2 — Cursor Skills
 
 Install the full repository into your project:
 
@@ -72,12 +84,15 @@ npx skills add unclecatvn/agent-skills
 
 Your AI assistant will discover skills, agents, and rules from the repo automatically.
 
-### Option 2 — CLI (pick a skill pack and version)
+### Option 3 — CLI (pick a skill pack and version)
 
 Install a specific pack into your project with the bundled CLI:
 
 ```bash
-# List available Odoo versions
+# List available Odoo versions from GitHub
+npx github:dubwerkz/agent-skills versions skills
+
+# Or use the npm package, if installed/published
 npx @dubwerkz/agent-skills-cli versions skills
 
 # Install Odoo 18 guides for Cursor
@@ -95,11 +110,13 @@ npx @dubwerkz/agent-skills-cli init --ai all --skill skills --version odoo-19.0
 
 Supported `--ai` targets: `cursor`, `claude`, `codex`, `antigravity`, `kiro`, `docs`, `all`.
 
-Codex installs globally into `$CODEX_HOME/skills/<skill-name>` when `CODEX_HOME` is set, otherwise `~/.codex/skills/<skill-name>`. Add `--project` to install into the current project's `.codex/skills/<skill-name>` instead.
+Codex installs globally into `$CODEX_HOME/skills/<skill-name>` when `CODEX_HOME` is set, otherwise `~/.codex/skills/<skill-name>`. Add `--project` to install into the current project's `.codex/skills/<skill-name>` and create/update the project root `AGENTS.md` with Odoo skill routing plus Superpowers-avoidance guidance.
+
+For project-local installs, the generated `AGENTS.md` block acts as a context-aware skill router: it lists installed `.codex/skills/*` entries, includes their trigger summaries from `SKILL.md`, and makes Odoo routing mandatory when Odoo files or tracebacks are in context.
 
 Other installable packs: `code-review`, `dtg-base`, `flow-diagram`, `odoo-commit`, `slide`.
 
-### Option 3 — Claude Code plugin
+### Option 4 — Claude Code plugin
 
 Install via the Claude plugin marketplace defined in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json). The plugin bundles Odoo skill packs (16–19), code review, DTG Base, Odoo Commit, Flow Diagram, slide decks, and the Odoo review/tracer agents.
 
@@ -247,6 +264,7 @@ agent-skills/
 ├── rules/                     # Coding style and security
 ├── bin/                       # CLI (`agent-skills`)
 ├── tests/                     # Structural validator (`npm test`)
+├── .codex-plugin/             # Codex plugin manifest
 ├── .claude-plugin/            # Claude Code plugin + marketplace
 ├── .github/workflows/         # CI, SkillSpector scan, release guards
 ├── CHANGELOG.md
@@ -263,7 +281,7 @@ Agent Skills works with popular AI-powered IDEs:
 |------------|----------------|
 | **Cursor** | `npx skills add unclecatvn/agent-skills` or CLI `--ai cursor` |
 | **Claude Code** | Plugin marketplace or CLI `--ai claude` |
-| **Codex** | CLI `--ai codex` |
+| **Codex** | Codex plugin + project setup via CLI `--ai codex --project` |
 | **Antigravity** | CLI `--ai antigravity` |
 | **Kiro** | CLI `--ai kiro` |
 | **Plain docs folder** | CLI `--ai docs` |

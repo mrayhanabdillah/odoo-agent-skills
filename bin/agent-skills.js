@@ -11,13 +11,15 @@ const DEFAULT_AI = "cursor";
 const DEFAULT_SKILL = "odoo";
 const DEFAULT_VERSION = "18.0";
 const EXCLUDED_DIRS = new Set(["bin", "node_modules"]);
-const GITHUB_REPO = "unclecatvn/agent-skills";
+const GITHUB_REPO = "dubwerkz/agent-skills";
 const NPM_PACKAGE = "@dubwerkz/agent-skills-cli";
 
 // Config file path for storing last update check
 const CONFIG_DIR = path.join(os.homedir(), ".agent-skills");
 const UPDATE_CHECK_FILE = path.join(CONFIG_DIR, "update-check.json");
 const UPDATE_CHECK_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+const CODEX_AGENTS_START = "<!-- agent-skills:codex-project:start -->";
+const CODEX_AGENTS_END = "<!-- agent-skills:codex-project:end -->";
 
 function printHelp() {
   const text = `
@@ -402,6 +404,125 @@ function resolveCodexHome(args) {
   return process.env.CODEX_HOME || path.join(os.homedir(), ".codex");
 }
 
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function listProjectCodexSkills(projectRoot) {
+  const skillsDir = path.join(projectRoot, ".codex", "skills");
+  if (!fs.existsSync(skillsDir)) return [];
+  return fs
+    .readdirSync(skillsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((name) => fs.existsSync(path.join(skillsDir, name, "SKILL.md")))
+    .sort();
+}
+
+function readProjectCodexSkillMetadata(projectRoot, skillName) {
+  const skillPath = path.join(projectRoot, ".codex", "skills", skillName, "SKILL.md");
+  const metadata = { name: skillName, description: "" };
+  try {
+    const text = fs.readFileSync(skillPath, "utf8");
+    const frontmatterMatch = /^---\s*\n([\s\S]*?)\n---/.exec(text);
+    if (!frontmatterMatch) return metadata;
+    const frontmatter = frontmatterMatch[1];
+    const nameMatch = /^name:\s*(.+)$/m.exec(frontmatter);
+    if (nameMatch) metadata.name = nameMatch[1].trim().replace(/^['"]|['"]$/g, "");
+    const descriptionMatch = /(?:^|\n)description:\s*(?:>|>-)?\s*\n?([\s\S]*?)(?=\n[^\s][A-Za-z0-9_-]*:\s|\s*$)/.exec(frontmatter);
+    if (descriptionMatch) {
+      metadata.description = descriptionMatch[1]
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .join(" ")
+        .replace(/^['"]|['"]$/g, "");
+    }
+  } catch {
+    // Fall through to defaults.
+  }
+  return metadata;
+}
+
+function summarizeSkillDescription(description) {
+  const text = String(description || "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (text.length <= 260) return text;
+  return `${text.slice(0, 257).replace(/\s+\S*$/, "")}...`;
+}
+
+function formatOdooSkillLabel(skillName) {
+  const match = /^odoo-(\d+)$/.exec(skillName);
+  return match ? `Odoo ${match[1]}` : skillName;
+}
+
+function buildCodexAgentsBlock(projectRoot) {
+  const skills = listProjectCodexSkills(projectRoot);
+  const skillMetadata = skills.map((skillName) => ({
+    id: skillName,
+    ...readProjectCodexSkillMetadata(projectRoot, skillName),
+  }));
+  const odooSkills = skills.filter((name) => /^odoo-\d+$/.test(name));
+  const lines = [
+    CODEX_AGENTS_START,
+    "## Agent Skills (Codex)",
+    "",
+    "- Project-local Codex skills are installed in `.codex/skills/`.",
+    "- Treat this block as the project-local skill router. Before answering, planning, debugging, or editing, match the user's request and touched files against the installed skills below.",
+  ];
+
+  if (skillMetadata.length > 0) {
+    lines.push("- Installed project-local skills:");
+    for (const skill of skillMetadata) {
+      const description = summarizeSkillDescription(skill.description) || "Use when the current task matches this skill's `SKILL.md` guidance.";
+      lines.push(`  - \`${skill.name}\`: read and follow \`.codex/skills/${skill.id}/SKILL.md\` when context matches. Trigger summary: ${description}`);
+    }
+  }
+
+  if (odooSkills.length > 0) {
+    lines.push(
+      "- MANDATORY Odoo routing: when a task involves Odoo, custom addons, `__manifest__.py`, Odoo Python models, fields, ORM, XML views, security CSV/XML, migrations, controllers, reports, QWeb, OWL assets, or an Odoo traceback, read and follow the installed project-local Odoo skill before answering, planning, debugging, or editing code."
+    );
+    for (const skillName of odooSkills) {
+      lines.push(`- ${formatOdooSkillLabel(skillName)} context: use \`.codex/skills/${skillName}/SKILL.md\`.`);
+    }
+  } else {
+    lines.push(
+      "- When an Odoo skill is installed in `.codex/skills/`, use the matching installed version for Odoo work before answering or editing code."
+    );
+  }
+
+  lines.push(
+    "- Do not use Superpowers plugins or skills for Odoo tasks by default, including brainstorming, TDD, systematic debugging, planning, subagent-driven development, or verification workflows.",
+    "- Only use Superpowers for Odoo work when the user explicitly asks for them or when higher-priority system/platform instructions require them.",
+    CODEX_AGENTS_END,
+    ""
+  );
+  return lines.join("\n");
+}
+
+function updateProjectAgents(projectRoot, args) {
+  const agentsPath = path.join(projectRoot, "AGENTS.md");
+  if (args.dryRun) return agentsPath;
+
+  const block = buildCodexAgentsBlock(projectRoot);
+  const existing = fs.existsSync(agentsPath)
+    ? fs.readFileSync(agentsPath, "utf8")
+    : "";
+  const managedBlockPattern = new RegExp(
+    `${escapeRegExp(CODEX_AGENTS_START)}[\\s\\S]*?${escapeRegExp(CODEX_AGENTS_END)}\\n?`,
+    "m"
+  );
+  const next = managedBlockPattern.test(existing)
+    ? existing.replace(managedBlockPattern, block)
+    : `${existing.replace(/\s*$/, "")}\n\n${block}`.replace(/^\n+/, "");
+
+  ensureDir(path.dirname(agentsPath));
+  fs.writeFileSync(agentsPath, next.endsWith("\n") ? next : `${next}\n`, "utf8");
+  return agentsPath;
+}
+
 function installCodex(versionDir, args) {
   const skillName = getSkillName(versionDir);
   const targetRoot = args.project
@@ -409,6 +530,7 @@ function installCodex(versionDir, args) {
     : resolveCodexHome(args);
   const targetDir = path.join(targetRoot, "skills", skillName);
   copyDir(versionDir, targetDir, args, null);
+  if (args.project) updateProjectAgents(args.dest, args);
   return targetDir;
 }
 

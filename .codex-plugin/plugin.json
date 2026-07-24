@@ -1,0 +1,38 @@
+{
+  "name": "odoo-agent-skills",
+  "version": "1.0.15",
+  "description": "Version-aware Odoo development skills for Codex, including Odoo 16, 17, 18, 19 references and project workflow helpers.",
+  "author": {
+    "name": "Dubwerkz",
+    "url": "https://github.com/dubwerkz"
+  },
+  "homepage": "https://github.com/dubwerkz/agent-skills",
+  "repository": "https://github.com/dubwerkz/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "odoo",
+    "python",
+    "codex",
+    "skills",
+    "erp",
+    "code-review"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Odoo Agent Skills",
+    "shortDescription": "Version-aware Odoo skills for Codex.",
+    "longDescription": "Odoo Agent Skills adds project-ready Codex skills for Odoo 16, 17, 18, and 19 development, plus code review, commit, diagram, and workflow guidance. Use the CLI project setup to install a project-local Odoo skill and AGENTS.md router for deterministic per-project behavior.",
+    "developerName": "Dubwerkz",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Skills",
+      "Code Review",
+      "Documentation"
+    ],
+    "defaultPrompt": [
+      "Review this Odoo module.",
+      "Implement this Odoo change.",
+      "Trace this Odoo flow."
+    ]
+  }
+}

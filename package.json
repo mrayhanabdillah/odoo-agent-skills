@@ -11,6 +11,7 @@
     "release:bump:dry": "node bin/release-bump.js --dry-run"
   },
   "files": [
+    ".codex-plugin",
     "bin",
     "skills",
     "commands",
@@ -21,8 +22,5 @@
   "author": "UncleCat",
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "@dubwerkz/agent-skills-cli": "^1.0.15"
   }
 }

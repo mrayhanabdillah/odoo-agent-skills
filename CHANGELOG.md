@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.15]
+
+### Changed
+- Project-local Codex installs (`--ai codex --project`) now create or update the project root `AGENTS.md` with a managed Agent Skills block.
+- The managed `AGENTS.md` block now acts as a context-aware project-local skill router, listing installed `.codex/skills/*` entries with trigger summaries from each `SKILL.md`.
+- Odoo routing is mandatory when Odoo files or tracebacks are in context, and the block tells agents to avoid Superpowers plugins/skills for Odoo tasks by default.
+- The CLI update checker now points at the Dubwerkz GitHub repository.
+
+### Added
+- `.codex-plugin/plugin.json` — Codex plugin manifest for distributing the bundled skills as a Codex plugin.
+- CLI validation coverage to ensure project-local Codex installs preserve existing `AGENTS.md` content while registering the installed Odoo skill guidance.
+
 ## [1.0.14]
 
 ### Changed

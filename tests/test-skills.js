@@ -6,7 +6,8 @@
  *   1. Every skills/* and agents/* folder has a SKILL.md with
  *      valid `name` and `description` in its YAML frontmatter.
  *   2. Every component path listed in .claude-plugin/plugin.json exists.
- *   3. package.json version has a matching section in CHANGELOG.md
+ *   3. .codex-plugin/plugin.json points to existing plugin assets.
+ *   4. package.json version has a matching section in CHANGELOG.md
  *      (skipped if the version is still 0.x or under [Unreleased]).
  *
  * Exit code 0 on success, 1 on any failure.
@@ -109,6 +110,39 @@ function validatePluginManifest() {
   }
 }
 
+function validateCodexPluginManifest() {
+  const manifestPath = path.join(ROOT, ".codex-plugin", "plugin.json");
+  if (!fs.existsSync(manifestPath)) {
+    fail(".codex-plugin/plugin.json not found");
+    return;
+  }
+  let manifest;
+  try {
+    manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  } catch (err) {
+    fail(`.codex-plugin/plugin.json: invalid JSON (${err.message})`);
+    return;
+  }
+
+  if (!manifest.name) fail(".codex-plugin/plugin.json: missing 'name'");
+  if (!manifest.version) fail(".codex-plugin/plugin.json: missing 'version'");
+  if (!manifest.description) fail(".codex-plugin/plugin.json: missing 'description'");
+  if (!manifest.interface || !manifest.interface.displayName) {
+    fail(".codex-plugin/plugin.json: missing 'interface.displayName'");
+  }
+
+  if (manifest.skills) {
+    const skillsPath = path.join(ROOT, manifest.skills);
+    if (!fs.existsSync(skillsPath)) {
+      fail(`.codex-plugin/plugin.json: skills path does not exist: ${manifest.skills}`);
+    } else {
+      ok(`.codex-plugin/plugin.json/skills: ${manifest.skills}`);
+    }
+  } else {
+    fail(".codex-plugin/plugin.json: missing 'skills'");
+  }
+}
+
 function validateChangelog() {
   const pkgPath = path.join(ROOT, "package.json");
   const changelogPath = path.join(ROOT, "CHANGELOG.md");
@@ -158,6 +192,8 @@ function validateCodexCliInstall() {
   }
 
   const projectRoot = fs.mkdtempSync(path.join(os.tmpdir(), "agent-skills-project-"));
+  const projectAgentsPath = path.join(projectRoot, "AGENTS.md");
+  fs.writeFileSync(projectAgentsPath, "# Existing Project Instructions\n\nKeep this line.\n", "utf8");
   const projectResult = spawnSync(
     process.execPath,
     [
@@ -197,6 +233,24 @@ function validateCodexCliInstall() {
     return;
   }
 
+  const projectAgents = fs.readFileSync(projectAgentsPath, "utf8");
+  if (!projectAgents.includes("Keep this line.")) {
+    fail("codex project cli install did not preserve existing AGENTS.md content");
+    return;
+  }
+  if (!projectAgents.includes(".codex/skills/odoo-18/SKILL.md")) {
+    fail("codex project cli install did not register the installed Odoo skill in AGENTS.md");
+    return;
+  }
+  if (!projectAgents.includes("Project-local Codex skills are installed") || !projectAgents.includes("Trigger summary:")) {
+    fail("codex project cli install did not add project-local skill routing guidance");
+    return;
+  }
+  if (!projectAgents.includes("Do not use Superpowers")) {
+    fail("codex project cli install did not add the Superpowers avoidance guidance");
+    return;
+  }
+
   ok("codex cli installs globally by default and locally with --project");
 }
 
@@ -209,6 +263,9 @@ function main() {
 
   console.log("\nValidating plugin manifest");
   validatePluginManifest();
+
+  console.log("\nValidating Codex plugin manifest");
+  validateCodexPluginManifest();
 
   console.log("\nValidating CHANGELOG");
   validateChangelog();
